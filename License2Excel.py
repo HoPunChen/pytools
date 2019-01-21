@@ -5,7 +5,7 @@ import os
 from tkinter import *
 from tkinter.filedialog import askdirectory
 import tkinter
-import xlwt
+import openpyxl
 import time
 
 def file_name(file_dir):
@@ -34,17 +34,22 @@ def write_excel(license_list,output_path):
     license_4k_list = license_list[:4000]
     print(len(license_4k_list))
 
-    excel = xlwt.Workbook(encoding='utf-8', style_compression=0)
-    sheet = excel.add_sheet('Sheet', cell_overwrite_ok=True)
-    sheet.write(0, 0, 'deviceId')
-    i = 1
+    # excel = xlwt.Workbook(encoding='utf-8', style_compression=0)
+    # sheet = excel.add_sheet('Sheet', cell_overwrite_ok=True)
+    # sheet.write(0, 0, 'deviceId')
+    excel = openpyxl.Workbook()
+    sheet = excel.active
+    # sheet = excel.create_sheet()
+    # sheet.title = 'Sheet'
+    sheet.cell(1, 1, 'deviceId')
+    i = 2
     for row in license_4k_list:
-        sheet.write(i, 0, row)
+        sheet.cell(i, 1, row)
         i = i + 1
     cur_time_rec = time.localtime()
     nowTime = int(round(time.time() * 1000))
 
-    excel.save(output_path + "/zibot{0:04d}{1:02d}{2:02d}-{3:02d}{4:02d}{5:02d}{6:20d}_speech_sbcAI.xls".format(
+    excel.save(output_path + "/zibot{0:04d}{1:02d}{2:02d}-{3:02d}{4:02d}{5:02d}{6:20d}_speech_sbcAI.xlsx".format(
         cur_time_rec.tm_year, cur_time_rec.tm_mon, cur_time_rec.tm_mday,
         cur_time_rec.tm_hour, cur_time_rec.tm_min, cur_time_rec.tm_sec,nowTime))
 

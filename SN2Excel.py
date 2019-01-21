@@ -5,8 +5,8 @@ import os
 from tkinter import *
 from tkinter.filedialog import askdirectory
 import tkinter
-import xlwt
-import time
+import openpyxl
+
 
 
 def file_name(file_dir):
@@ -63,17 +63,22 @@ def write_excel(license_list,output_path):
     length = len(license_4k_list)
     print(start_sn +'-'+end_sn+'---'+ str(length))
 
-    excel = xlwt.Workbook(encoding='utf-8', style_compression=0)
-    sheet = excel.add_sheet('Sheet', cell_overwrite_ok=True)
-    sheet.write(0, 0, 'deviceId')
-    i = 1
+    # excel = xlwt.Workbook(encoding='utf-8', style_compression=0)
+    # sheet = excel.add_sheet('Sheet', cell_overwrite_ok=True)
+    # sheet.write(0, 0, 'deviceId')
+    excel = openpyxl.Workbook()
+    sheet = excel.active
+    # sheet = excel.create_sheet()
+    # sheet.title = 'Sheet'
+    sheet.cell(1,1,'deviceId')
+    i = 2
     for row in license_4k_list:
-        sheet.write(i, 0, row)
+        sheet.cell(i, 1, row)
         i = i + 1
     # cur_time_rec = time.localtime()
     # nowTime = int(round(time.time() * 1000))
 
-    excel.save(output_path + "/zibot{0:16s}-{1:16s}---{2:04d}_wechat.xls".format(start_sn, end_sn, length))
+    excel.save(output_path + "/zibot{0:16s}-{1:16s}---{2:04d}_wechat.xlsx".format(start_sn, end_sn, length))
 
     if(len(license_list)>4000):
         new_license_list = license_list[4000:]
