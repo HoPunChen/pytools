@@ -103,7 +103,7 @@ class selectPath():
 
 if __name__ == '__main__':
     root = Tk()
-    root.title = "License2Excel"
+    root.title("License2Excel1.1")
     input_path = selectPath()
     output_path = selectPath()
     # Thinker总共提供了三种布局组件的方法：pack(),grid()和place()
